@@ -13,14 +13,14 @@ repositories {
         url = 'https://maven.minecraftforge.net'
     }
     maven {
-        name = "Gegy"
-        url = "https://maven.gegy.dev"
-    }
-    maven {
         url "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
         }
+    }
+    maven {
+        name = "JitPack"
+        url = "https://jitpack.io"
     }
 }
 
@@ -33,34 +33,42 @@ dependencies {
     implementation project(":Common")
     include implementation("com.electronwill.night-config:toml:${nightconfig_version}")
     include implementation("com.electronwill.night-config:core:${nightconfig_version}")
+    include implementation("blue.endless:jankson:${jankson_version}")
     modImplementation("com.github.glitchfiend:TerraBlender-fabric:${minecraft_version}-${terrablender_version}")
-//    modImplementation ("supercoder79:databreaker:${databreaker_version}") {
-//        exclude module: "fabric-loader"
-//    }
 
-//    modImplementation "curse.maven:dashloader-472772:3619672"
+
+    modImplementation ("com.github.CorgiTaco:databreaker:${databreaker_version}") {
+        exclude module: "fabric-loader"
+    }
+
+    modImplementation "curse.maven:starlight-521783:3667443"
+//    modImplementation "curse.maven:cyanide-543444:3538092"
 }
 
 loom {
     accessWidenerPath = project(":Common").file("src/main/resources/byg.aw")
     runs {
+        def args = ["-DbygDev=true", "-DbygGenerateData=true"]
+
         client {
             client()
             setConfigName("Fabric Client")
             ideConfigGenerated(true)
             runDir("run")
+            vmArgs(args)
         }
         server {
             server()
             setConfigName("Fabric Server")
             ideConfigGenerated(true)
             runDir("run")
+            vmArgs(args)
         }
     }
 }
 
 processResources {
-    from project(":Common").sourceSets.main.resources
+//    from project(":Common").sourceSets.main.resources
     inputs.property "version", project.version
 
     filesMatching("fabric.mod.json") {
@@ -72,12 +80,28 @@ processResources {
     }
 }
 
-tasks.withType(JavaCompile) {
-    source(project(":Common").sourceSets.main.allSource)
+//tasks.withType(JavaCompile) {
+//    source(project(":Common").sourceSets.main.allSource)
+//}
+tasks.withType(Javadoc) {
+    failOnError false
 }
 
 jar {
     from("LICENSE") {
         rename { "${it}_${mod_name}" }
+    }
+}
+// Disable to build with gradle //TODO: Fix gradle + building w/ intellij
+sourceSets {
+    main {
+        java {
+//            srcDir 'src/main/java'
+            srcDirs project(':Common').sourceSets.main.java.srcDirs
+        }
+        resources {
+//            srcDir 'src/main/resources'
+            srcDirs project(':Common').sourceSets.main.resources.srcDirs
+        }
     }
 }

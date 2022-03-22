@@ -11,7 +11,7 @@ import net.minecraft.Util;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import potionstudios.byg.BYG;
-import potionstudios.byg.util.CodecUtil;
+import potionstudios.byg.util.codec.CodecUtil;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static potionstudios.byg.common.world.biome.BYGBiomes.*;
 
+@Deprecated
 public record BiomeDictionaryConfig(Map<ResourceKey<Biome>, List<String>> biomeDictionary) {
     public static final BiomeDictionaryConfig DEFAULT = new BiomeDictionaryConfig(Util.make(new Object2ObjectOpenHashMap<>(), map -> {
         map.put(ALLIUM_FIELDS, List.of("PLAINS", "RARE", "LUSH", "OVERWORLD"));
@@ -39,9 +40,9 @@ public record BiomeDictionaryConfig(Map<ResourceKey<Biome>, List<String>> biomeD
         map.put(CHERRY_BLOSSOM_FOREST, List.of("FOREST", "OVERWORLD"));
         map.put(CIKA_WOODS, List.of("FOREST", "COLD", "CONIFEROUS", "OVERWORLD"));
         map.put(CONIFEROUS_FOREST, List.of("FOREST", "COLD", "CONIFEROUS", "OVERWORLD"));
-//        map.put(CRAG_GARDENS, List.of("JUNGLE", "WET", "PLATEAU", "RARE", "MAGICAL", "OVERWORLD"));
+        map.put(CRAG_GARDENS, List.of("JUNGLE", "WET", "PLATEAU", "RARE", "MAGICAL", "OVERWORLD"));
         map.put(CYPRESS_SWAMPLANDS, List.of("SWAMP", "OVERWORLD"));
-        map.put(DEAD_SEA, List.of("OCEAN", "WASTELAND", "SPOOKY", "OVERWORLD"));
+        map.put(LUSH_STACKS, List.of("OCEAN", "WASTELAND", "SPOOKY", "OVERWORLD"));
 //        map.put(DECIDUOUS_FOREST, List.of("FOREST", "OVERWORLD"));
         map.put(DACITE_RIDGES, List.of("MOUNTAIN", "COLD", "CONIFEROUS", "OVERWORLD"));
         map.put(WINDSWEPT_DUNES, List.of("DRY", "HOT", "SANDY", "OVERWORLD"));
@@ -60,7 +61,7 @@ public record BiomeDictionaryConfig(Map<ResourceKey<Biome>, List<String>> biomeD
         map.put(PRAIRIE, List.of("PLAINS", "DRY", "OVERWORLD"));
 //        map.put(RED_DESERT, List.of("DRY", "HOT", "SANDY", "OVERWORLD"));
         map.put(RED_OAK_FOREST, List.of("FOREST", "OVERWORLD"));
-//        map.put(RED_ROCK_VALLEY, List.of("DRY", "HOT", "MOUNTAIN", "OVERWORLD"));
+        map.put(RED_ROCK_VALLEY, List.of("DRY", "HOT", "MOUNTAIN", "OVERWORLD"));
         map.put(REDWOOD_THICKET, List.of("FOREST", "DENSE", "RARE", "OVERWORLD"));
         map.put(ROSE_FIELDS, List.of("OVERWORLD", "PLAINS", "RARE", "LUSH"));
         map.put(AUTUMNAL_FOREST, List.of("FOREST", "COLD", "OVERWORLD"));

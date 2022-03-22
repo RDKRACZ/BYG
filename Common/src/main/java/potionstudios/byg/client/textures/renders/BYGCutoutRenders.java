@@ -15,6 +15,8 @@ public class BYGCutoutRenders {
         Map<Block, RenderType> map = new HashMap<>();
         //Plants
 
+        map.put(BYGBlocks.WITCH_HAZEL_BLOSSOM, RenderType.cutoutMipped());
+        map.put(BYGBlocks.WITCH_HAZEL_BRANCH, RenderType.cutoutMipped());
         map.put(BYGBlocks.ALOE_VERA, RenderType.cutoutMipped());
         map.put(BYGBlocks.BLOOMING_ALOE_VERA, RenderType.cutoutMipped());
         map.put(BYGBlocks.HORSEWEED, RenderType.cutoutMipped());
@@ -49,7 +51,6 @@ public class BYGCutoutRenders {
         map.put(BYGBlocks.BORIC_CAMPFIRE, RenderType.cutoutMipped());
         //Nether
         map.put(BYGBlocks.OVERGROWN_NETHERRACK, RenderType.cutoutMipped());
-        map.put(BYGBlocks.MOSSY_NETHERRACK, RenderType.cutoutMipped());
         map.put(BYGBlocks.SOUL_SHROOM_SPORE, RenderType.cutoutMipped());
         map.put(BYGBlocks.SOUL_SHROOM_SPORE_END, RenderType.cutoutMipped());
         map.put(BYGBlocks.SOUL_SHROOM, RenderType.cutoutMipped());
@@ -125,7 +126,7 @@ public class BYGCutoutRenders {
         map.put(BYGBlocks.CATTAIL_SPROUT, RenderType.cutoutMipped());
         map.put(BYGBlocks.CATTAIL, RenderType.cutoutMipped());
         map.put(BYGBlocks.TINY_LILYPADS, RenderType.cutoutMipped());
-        map.put(BYGBlocks.WATER_SILK, RenderType.translucent());
+        map.put(BYGBlocks.WATER_SILK, RenderType.cutoutMipped());
 
         //Doors
         map.put(BYGBlocks.ASPEN_DOOR, RenderType.translucent());

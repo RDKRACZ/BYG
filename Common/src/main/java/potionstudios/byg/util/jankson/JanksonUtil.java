@@ -1,8 +1,20 @@
 package potionstudios.byg.util.jankson;
 
 import blue.endless.jankson.*;
+import blue.endless.jankson.api.SyntaxError;
+import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
+import potionstudios.byg.BYG;
+import potionstudios.byg.util.BYGUtil;
+import potionstudios.byg.util.codec.FromFileOps;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 public class JanksonUtil {
@@ -52,5 +64,27 @@ public class JanksonUtil {
             return alphabeticallySortedJsonObject;
         }
         return object;
+    }
+
+    public static <T> void createConfig(Path path, Codec<T> codec, String header, Map<String, String> comments, FromFileOps<JsonElement> ops, T from) {
+        JsonElement jsonElement = codec.encodeStart(ops, from).result().orElseThrow();
+
+        if (jsonElement instanceof JsonObject jsonObject) {
+            jsonElement = addCommentsAndAlphabeticallySortRecursively(comments, jsonObject, "", true);
+        }
+        try {
+            Files.createDirectories(path.getParent());
+            String output = header + jsonElement.toJson(JSON_GRAMMAR);
+            Files.write(path, output.getBytes());
+        } catch (IOException e) {
+            BYG.LOGGER.error(e.toString());
+        }
+    }
+
+    public  static <T> T readConfig(Path path, Codec<T> codec, DynamicOps<JsonElement> ops) throws IOException, SyntaxError {
+        JsonObject load = JANKSON.load(path.toFile());
+        DataResult<Pair<T, JsonElement>> decode = codec.decode(ops, load);
+        Optional<Pair<T, JsonElement>> resultOrPartial = decode.resultOrPartial(BYG.LOGGER::error);
+        return resultOrPartial.orElseThrow(() -> BYGUtil.configFileFailureException(path)).getFirst();
     }
 }
